@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="balance_template">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h1 class="text-center">Your Current Balance</h1>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <p class="lead text-center">
+                            The current balance is: <strong t-esc="balance"></strong>
+                        </p>
+                    </div>
+                </div>
+
+                <h2 class="mt-4">Entries</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <t t-foreach="entries" t-as="entry">
+                            <tr>
+                                <td t-esc="entry.name" />
+                                <td t-esc="entry.date" />
+                                <td>
+                                    <span t-att-class="'text-success' if entry.type == 'income' else 'text-danger'">
+                                        <t t-esc="entry.amount"/>
+                                    </span>
+                                </td>
+                                <td t-esc="entry.type == 'income' and 'Income' or 'Expense'"></td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td colspan="2">Total:</td>
+                            <td t-esc="balance"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

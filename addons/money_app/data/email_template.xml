@@ -1,0 +1,17 @@
+<odoo>
+    <record id="money_entry_balance_email_template" model="mail.template">
+        <field name="name">Balance Notification Email</field>
+        <field name="model_id" ref="model_money_entry" />
+        <field name="subject">Current Balance Notification</field>
+        <field name="email_from">admin1@example.com</field>
+        <field name="email_to">admin2@example.com</field>
+        <field name="body_html">
+            <![CDATA[
+                <p>Hello,</p>
+                <p>Your current balance is: <t t-out="ctx.get('balance', 'N/A')" /></p>
+                <p>Best regards,<br>Your Money Management App</p>
+            ]]>
+        </field>
+        <field name="auto_delete" eval="True" />
+    </record>
+</odoo>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!--Tree View-->
+  <record id="view_money_entry_tree" model="ir.ui.view">
+    <field name="name">money.entry.tree</field>
+    <field name="model">money.entry</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="date" />
+        <field name="name" />
+        <field name="type" />
+        <field name="amount" />
+        <field name="balance" readonly="1" />
+      </tree>
+    </field>
+  </record>
+
+  <!--Kanban View-->
+  <record id="view_money_entry_kanban" model="ir.ui.view">
+    <field name="name">money.entry.kanban</field>
+    <field name="model">money.entry</field>
+    <field name="arch" type="xml">
+      <kanban>
+        <field name="id" />
+        <field name="name" />
+        <field name="date" />
+        <field name="type" />
+        <field name="amount" />
+
+        <templates>
+          <t t-name="kanban-box">
+            <div class="oe_kanban_global_click border border-primary">
+              <div class="oe_kanban_details">
+                <strong>
+                  <field name="name" />
+                </strong>
+                <ul>
+                  <li>
+                    <field name="date" />
+                  </li>
+                  <li>
+                    <field name="type" />
+                  </li>
+                  <li>
+                    <field name="amount" />
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </t>
+        </templates>
+      </kanban>
+    </field>
+  </record>
+
+  <!--Graph View-->
+  <record id="view_money_entry_graph" model="ir.ui.view">
+    <field name="name">money.entry.graph</field>
+    <field name="model">money.entry</field>
+    <field name="arch" type="xml">
+      <graph>
+        <field name="date" />
+        <field name="amount" type="measure" />
+        <field name="type" />
+      </graph>
+    </field>
+  </record>
+
+  <!--Search View-->
+  <record id="view_money_entry_search" model="ir.ui.view">
+    <field name="name">money.entry.search</field>
+    <field name="model">money.entry</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name" />
+        <field name="date" />
+        <filter string="Income" name="income_filter" domain="[('type', '=', 'income')]" />
+        <filter string="Expense" name="expense_filter" domain="[('type', '=', 'expense')]" />
+      </search>
+    </field>
+  </record>
+
+  <!--Action-->
+  <record id="action_money_entry" model="ir.actions.act_window">
+    <field name="name">Money Entry</field>
+    <field name="res_model">money.entry</field>
+    <field name="view_mode">kanban,tree,form,graph</field>
+    <field name="search_view_id" ref="view_money_entry_search" />
+  </record>
+
+  <!--Server Action-->
+  <record id="action_get_balance" model="ir.actions.server">
+    <field name="name">Show Balance</field>
+    <field name="model_id" ref="model_money_entry" />
+    <field name="state">code</field>
+    <field name="code">action = model.get_balance2()</field>
+  </record>
+
+  <!--Action to Open Website Balance URL-->
+  <record id="action_open_website_balance" model="ir.actions.act_url">
+    <field name="name">Show Balance</field>
+    <field name="type">ir.actions.act_url</field>
+    <field name="url">/money/balance</field>
+    <field name="target">new</field>
+  </record>
+
+  <!--Menu-->
+  <menuitem
+    id="menu_money_app_root"
+    name="Money App"
+    />
+
+  <menuitem
+    id="menu_money_entry"
+    parent="menu_money_app_root"
+    action="action_money_entry"
+    />
+
+  <menuitem
+    id="menu_show_balance"
+    name="Show Balance PopUp"
+    parent="menu_money_app_root"
+    action="action_get_balance"
+    sequence="20" />
+
+  <menuitem
+    id="menu_show_balance_web"
+    name="Show Balance on Website"
+    parent="menu_money_app_root"
+    action="action_open_website_balance"
+    sequence="20"/>
+</odoo>
