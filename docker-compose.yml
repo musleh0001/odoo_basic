@@ -29,8 +29,9 @@ services:
       USER: ${ODOO_DB_USER}
       PASSWORD: ${ODOO_DB_PASSWORD}
     volumes:
-      - ./config/odoo.conf:/etc/odoo/odoo.conf
+      - ./data/odoo:/var/lib/odoo 
       - ./addons/custom_addons:/mnt/extra-addons
+      - ./config/odoo.conf:/etc/odoo/odoo.conf
     command: >
       odoo
       --dev=reload
