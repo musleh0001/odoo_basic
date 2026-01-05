@@ -1,9 +1,0 @@
-{
-    "python.analysis.extraPaths": [
-        "~/programming/odoo/odoo-src/odoo",
-        "~/programming/odoo/odoo-src/odoo/addons",
-        "./addons/custom_addons"
-    ],
-    "python.analysis.typeCheckingMode": "basic",
-    "python.defaultInterpreterPath": "~/programming/odoo/odoo-src/odoo/.venv/bin/python"
-}
