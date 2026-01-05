@@ -31,6 +31,7 @@
 						<group>
 							<field name="reference" readonly="True" />
 							<field name="patient_id" />
+							<field name="date_of_birth" />
 							<field name="date_appointment" />
 						</group>
 						<group>
