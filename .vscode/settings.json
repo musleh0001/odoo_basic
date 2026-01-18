@@ -1,0 +1,14 @@
+{
+    "python.analysis.extraPaths": [
+        "../odoo",
+        "../odoo/odoo",
+        "./addons",
+        "./addons/custom_addons"
+    ],
+    "python.autoComplete.extraPaths": [
+        "../odoo",
+        "../odoo/odoo",
+        "./addons",
+        "./addons/custom_addons"
+    ]
+}

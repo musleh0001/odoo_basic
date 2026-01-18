@@ -1,15 +1,14 @@
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 
 class HospitalAppointment(models.Model):
     _name = "hospital.appointment"
-    _inherit = ["mail.thread"]
     _description = "Hospital Appointment"
-    _rec_names_search = ["reference", "patient_id"]
+    _inherit = ["mail.thread"]
     _rec_name = "patient_id"
 
-    reference = fields.Char(string="reference", default="New")
-    patient_id = fields.Many2one("hospital.patient", string="Patient", ondelete="restrict")
+    reference = fields.Char(string="Reference", default="New")
+    patient_id = fields.Many2one("hospital.patient", string="Patient")
     date_appointment = fields.Date(string="Date")
     note = fields.Text(string="Note")
     state = fields.Selection(
@@ -23,46 +22,27 @@ class HospitalAppointment(models.Model):
         default="draft",
         tracking=True
     )
-    appointment_line_ids = fields.One2many("hospital.appointment.line", "appointment_id", string="Lines") 
-    total_qty = fields.Float(compute="_compute_total_qty", string="Total Quantity")
-    date_of_birth = fields.Date(related="patient_id.date_of_birth")
 
     @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if vals.get("reference", "New") == "New":
-                vals["reference"] = self.env["ir.sequence"].next_by_code("hospital.appointment")
-        return super().create(vals_list)
+    def create(self, vals):
+        for val in vals:
+            if val.get("reference", "New") == "New":
+                    val["reference"] = self.env["ir.sequence"].next_by_code("hospital.appointment")
 
-    def _compute_total_qty(self):
-        for rec in self:
-            rec.total_qty = sum(rec.appointment_line_ids.mapped("qty"))
-
-    def _compute_display_name(self):
-        for rec in self:
-            rec.display_name = f"[{rec.reference}] {rec.patient_id.name}"
-
+        return super().create(vals)
+    
     def action_confirm(self):
         for rec in self:
             rec.state = "confirmed"
-
+    
     def action_ongoing(self):
         for rec in self:
             rec.state = "ongoing"
-
+    
     def action_done(self):
         for rec in self:
             rec.state = "done"
-
+    
     def action_cancel(self):
         for rec in self:
             rec.state = "cancel"
-
-
-class HospitalAppointmentLine(models.Model):
-    _name = "hospital.appointment.line"
-    _description = "Hospital Appointment Line"
-
-    appointment_id = fields.Many2one("hospital.appointment", string="Appointment")
-    product_id = fields.Many2one("product.product", string="Product", required=True)
-    qty = fields.Float(string="Quantity")

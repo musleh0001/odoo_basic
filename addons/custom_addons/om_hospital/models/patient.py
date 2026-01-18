@@ -1,10 +1,10 @@
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 class HospitalPatient(models.Model):
     _name = "hospital.patient"
-    _inherit = ["mail.thread"]
     _description = "Patient Master"
+    _inherit = ["mail.thread"]
 
     name = fields.Char(string="Name", required=True, tracking=True)
     date_of_birth = fields.Date(string="DOB", tracking=True)
@@ -13,6 +13,6 @@ class HospitalPatient(models.Model):
             ("male", "Male"),
             ("female", "Female"),
         ],
-        string="Gender"
+        string="Gender",
+        tracking=True
     )
-    tag_ids = fields.Many2many("patient.tag", "patient_tag_rel", "patient_id", "tag_id", string="Tags")
