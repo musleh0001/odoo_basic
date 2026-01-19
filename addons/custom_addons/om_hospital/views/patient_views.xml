@@ -10,6 +10,7 @@
                 <field name="name" />
                 <field name="date_of_birth" optional="show" />
                 <field name="gender" optional="hide" />
+                <field name="tag_ids" widget="many2many_tags" optional="hide" />
             </tree>
         </field>
     </record>
@@ -40,6 +41,9 @@
 
                                 <div> ⚧ Gender: <field name="gender" />
                                 </div>
+
+                                <div> Tags: <field name="tag_ids" />
+                                </div>
                             </div>
 
                         </div>
@@ -67,6 +71,7 @@
 
                         <group>
                             <field name="gender" widget="radio" />
+                            <field name="tag_ids" widget="many2many_tags" />
                         </group>
                     </group>
                 </sheet>
