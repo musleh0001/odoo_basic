@@ -6,6 +6,7 @@ class HospitalAppointment(models.Model):
     _description = "Hospital Appointment"
     _inherit = ["mail.thread"]
     _rec_name = "patient_id"
+    _rec_names_search = ["reference", "patient_id"]
 
     reference = fields.Char(string="Reference", default="New")
     patient_id = fields.Many2one("hospital.patient", string="Patient")
@@ -31,6 +32,10 @@ class HospitalAppointment(models.Model):
                     val["reference"] = self.env["ir.sequence"].next_by_code("hospital.appointment")
 
         return super().create(vals)
+    
+    def _compute_display_name(self):
+        for rec in self:
+            rec.display_name = f"[{rec.reference}] {rec.patient_id.name}"
     
     def action_confirm(self):
         for rec in self:
