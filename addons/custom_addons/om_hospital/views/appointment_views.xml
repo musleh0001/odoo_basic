@@ -77,11 +77,30 @@
                             <field name="patient_id" placeholder="Patient" />
                             <field name="date_appointment" />
                         </group>
-
-                        <group>
-                            <field name="note" />
-                        </group>
                     </group>
+                    <notebook>
+                        <page name="appointment_lines" string="Lines">
+                            <field name="appointment_line_ids">
+                                <tree string="product_id">
+                                    <field name="product_id" />
+                                    <field name="qty" />
+                                </tree>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <field name="product_id" />
+                                            <field name="qty" />
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                        <page name="other_info" string="Other Info">
+                            <group>
+                                <field name="note" />
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
 
                 <div class="oe_chatter">
