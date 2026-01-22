@@ -9,7 +9,9 @@
             <tree string="Appointments">
                 <field name="reference" />
                 <field name="patient_id" />
+                <field name="date_of_birth" />
                 <field name="date_appointment" />
+                <field name="total_qty" />
             </tree>
         </field>
     </record>
@@ -37,6 +39,8 @@
                                 <div> Patient: <field name="patient_id" />
                                 </div>
                                 <div> Appointment Date: <field name="date_appointment" />
+                                </div>
+                                <div> Total Quantity: <field name="total_qty" />
                                 </div>
                             </div>
 
@@ -75,7 +79,11 @@
                     <group>
                         <group>
                             <field name="patient_id" placeholder="Patient" />
+                            <field name="date_of_birth" />
                             <field name="date_appointment" />
+                        </group>
+                        <group>
+                            <field name="total_qty" />
                         </group>
                     </group>
                     <notebook>
