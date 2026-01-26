@@ -9,7 +9,7 @@ class HospitalAppointment(models.Model):
     _rec_names_search = ["reference", "patient_id"]
 
     reference = fields.Char(string="Reference", default="New")
-    patient_id = fields.Many2one("hospital.patient", string="Patient")
+    patient_id = fields.Many2one("hospital.patient", string="Patient", ondelete="restrict")
     date_appointment = fields.Date(string="Date")
     note = fields.Text(string="Note")
     state = fields.Selection(

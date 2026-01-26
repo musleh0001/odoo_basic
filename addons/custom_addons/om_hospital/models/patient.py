@@ -1,4 +1,5 @@
-from odoo import models, fields
+from odoo import _, models, fields
+from odoo.exceptions import UserError
 
 
 class HospitalPatient(models.Model):
@@ -17,3 +18,14 @@ class HospitalPatient(models.Model):
         tracking=True
     )
     tag_ids = fields.Many2many("patient.tag", "patient_tag_rel", "patient_id", "tag_id", string="Tags")
+
+    @api.ondelete(at_uninstall=False)
+    def _check_patient_appointment(self):
+        for rec in self:
+            domain = [("patient_id", "=", rec.id)]
+            appointments = self.env["hospital.appointment"].search(domain)
+            if appointments:
+                raise UserError(_("You can't delete the patient now.\nAppointments existing for this patient: %s" % rec.name))
+
+    def unlink(self):
+        return super().unlink()
